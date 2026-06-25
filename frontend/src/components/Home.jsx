@@ -16,12 +16,12 @@ function Home() {
 
   return (
     <>
-    <Nav />
-    <div className="w-[100vw] min-h-[100vh] pt-[100px] flex flex-col items-center bg-[#fff9f6]">
-      {userData.role === "user" && <UserDashboard />}
-      {userData.role === "owner" && <OwnerDashboard />}
-      {userData.role === "deliveryBoy" && <DeliveryBoy />}
-    </div>
+      <Nav />
+      <div className="w-full min-h-screen pt-20 flex flex-col items-center bg-[#fafafa] overflow-x-hidden">
+        {userData.role === "user" && <UserDashboard />}
+        {userData.role === "owner" && <OwnerDashboard />}
+        {userData.role === "deliveryBoy" && <DeliveryBoy />}
+      </div>
     </>
   );
 }

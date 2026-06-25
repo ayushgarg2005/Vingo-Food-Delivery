@@ -163,251 +163,308 @@ function UserDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f7f4]">
-      <div className="pt-20 pb-8 px-4">
-        <div className="max-w-7xl mx-auto">
+    <div className="w-full pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-[fadeIn_0.4s_ease]">
+      {/* ═══════════════════════════════════ HERO SECTION ═══════════════════════════════════ */}
+      <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#111827] via-[#1f2937] to-[#111827] p-6 sm:p-10 text-white mb-8 shadow-xl border border-gray-800 mt-2">
+        {/* Animated gradient orbs */}
+        <div className="absolute -right-12 -top-12 w-72 h-72 bg-gradient-to-br from-[#ff4d2d]/30 to-orange-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+        <div className="absolute left-1/4 -bottom-14 w-60 h-60 bg-gradient-to-tr from-amber-400/15 to-pink-500/5 rounded-full blur-3xl pointer-events-none" />
 
-          {/* ═══════════════════════════════════ HERO SECTION ═══════════════════════════════════ */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] p-6 md:p-8 text-white mb-7">
-            {/* Animated gradient orbs */}
-            <div className="absolute -right-12 -top-12 w-56 h-56 bg-gradient-to-br from-[#ff4d2d]/40 to-orange-500/20 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute left-1/4 -bottom-14 w-44 h-44 bg-gradient-to-tr from-amber-400/20 to-pink-500/10 rounded-full blur-3xl" />
-            <div className="absolute right-1/3 top-1/4 w-28 h-28 bg-gradient-to-bl from-cyan-400/10 to-transparent rounded-full blur-2xl" />
-
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/10 text-orange-200 px-3 py-1 rounded-full text-xs font-medium mb-3">
-                <FaMapMarkerAlt size={10} />
-                Delivering in {city}
-              </div>
-
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold leading-[1.15] tracking-tight">
-                Discover{" "}
-                <span className="bg-gradient-to-r from-[#ff6b4a] via-orange-400 to-amber-300 bg-clip-text text-transparent">
-                  Amazing Food
-                </span>
-              </h1>
-
-              <p className="mt-2 text-gray-300/90 max-w-lg text-sm leading-relaxed">
-                Fresh meals from the best restaurants, delivered fast to your doorstep.
-              </p>
-            </div>
-
-            {/* Stats badges */}
-            <div className="relative z-10 flex flex-wrap gap-2 mt-5">
-              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-lg">
-                <IoStorefront className="text-orange-300" size={13} />
-                <span className="text-xs font-medium text-white/90">{shopInMyCity?.length || 0} Restaurants</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-lg">
-                <FaShoppingBag className="text-amber-300" size={12} />
-                <span className="text-xs font-medium text-white/90">{itemsInMyCity?.length || 0} Items</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-lg">
-                <HiSparkles className="text-yellow-300" size={13} />
-                <span className="text-xs font-medium text-white/90">Fast Delivery</span>
-              </div>
-            </div>
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/15 text-orange-200 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 shadow-sm">
+            <FaMapMarkerAlt size={11} className="text-[#ff4d2d]" />
+            Delivering in {city || "Your City"}
           </div>
 
-          {/* ═══════════════════════════════════ CATEGORIES ═══════════════════════════════════ */}
-          <div className="mb-7">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#ff4d2d] to-orange-500 flex items-center justify-center shadow-sm shadow-orange-500/20">
-                <FaUtensils className="text-white" size={11} />
-              </div>
-              <h2 className="text-base font-bold text-gray-900 tracking-tight">Browse Categories</h2>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1]">
+            Discover{" "}
+            <span className="bg-gradient-to-r from-[#ff6b4a] via-orange-400 to-amber-300 bg-clip-text text-transparent">
+              Culinary Excellence
+            </span>
+          </h1>
+
+          <p className="mt-3 text-gray-300/90 max-w-lg text-sm sm:text-base leading-relaxed">
+            Order artisan dishes from top-rated partner restaurants with live GPS map tracking and priority dispatch.
+          </p>
+
+          {/* Stats badges */}
+          <div className="flex flex-wrap gap-2.5 mt-6">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-2 rounded-xl">
+              <IoStorefront className="text-orange-300" size={15} />
+              <span className="text-xs font-bold text-white/90">{shopInMyCity?.length || 0} Restaurants</span>
             </div>
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 border ${selectedCategory === category
-                      ? "bg-[#ff4d2d] text-white border-[#ff4d2d] shadow-md shadow-orange-500/25"
-                      : "bg-white text-gray-600 border-gray-200/80 hover:border-orange-300 hover:text-[#ff4d2d] hover:bg-orange-50/50 shadow-sm"
-                    }`}
-                >
-                  <span className="text-sm">{categoryIcons[category]}</span>
-                  {category}
-                </button>
-              ))}
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-2 rounded-xl">
+              <FaShoppingBag className="text-amber-300" size={13} />
+              <span className="text-xs font-bold text-white/90">{itemsInMyCity?.length || 0} Dishes</span>
             </div>
-          </div>
-
-          {/* ═══════════════════════════════════ RECENT ORDERS ═══════════════════════════════════ */}
-          {recentOrders.length > 0 && (
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-sm shadow-purple-500/20">
-                    <FaHistory className="text-white" size={11} />
-                  </div>
-                  <h2 className="text-base font-bold text-gray-900 tracking-tight">Recent Orders</h2>
-                </div>
-                <button onClick={() => navigate("/orders")} className="text-xs font-semibold text-[#ff4d2d] hover:text-orange-600 transition flex items-center gap-1">
-                  View All
-                  <FaChevronRight size={9} />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {recentOrders.map((order) => {
-                  const cfg = statusConfig[order.status] || statusConfig.placed;
-                  return (
-                    <div key={order._id} className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200/80 transition-all duration-300 flex flex-col justify-between">
-                      <div>
-                        {/* Header row */}
-                        <div className="flex justify-between items-start mb-2.5">
-                          <div className="flex items-center gap-2.5">
-                            {order.shop?.image ? (
-                              <img src={order.shop.image} alt={order.shop.name} className="w-9 h-9 rounded-lg object-cover ring-1 ring-gray-100" />
-                            ) : (
-                              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-100 to-amber-50 flex items-center justify-center">
-                                <IoStorefront className="text-[#ff4d2d]" size={15} />
-                              </div>
-                            )}
-                            <div>
-                              <h3 className="font-bold text-gray-800 text-xs truncate max-w-[130px]">{order.shop?.name || "Restaurant"}</h3>
-                              <p className="text-[10px] text-gray-400 mt-0.5">
-                                {new Date(order.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
-                              </p>
-                            </div>
-                          </div>
-                          <span className={`flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold border ${cfg.color}`}>
-                            {cfg.icon}
-                            {cfg.label}
-                          </span>
-                        </div>
-
-                        {/* Items list */}
-                        <div className="bg-gray-50/80 rounded-lg p-2.5 space-y-1 mb-3">
-                          {order.items.slice(0, 2).map((item, idx) => (
-                            <div key={idx} className="flex items-center justify-between text-xs">
-                              <span className="text-gray-600 truncate pr-2">
-                                <span className="text-gray-400 font-medium">{item.quantity}×</span> {item.name}
-                              </span>
-                            </div>
-                          ))}
-                          {order.items.length > 2 && (
-                            <p className="text-[10px] text-gray-400 pt-0.5">+{order.items.length - 2} more items</p>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Footer */}
-                      <div className="flex justify-between items-center pt-2.5 border-t border-gray-100">
-                        <span className="font-extrabold text-gray-900 text-sm">₹{order.totalAmount}</span>
-                        <button onClick={() => navigate("/orders")} className="text-[10px] font-semibold text-[#ff4d2d] hover:text-orange-600 transition bg-orange-50 hover:bg-orange-100 px-3 py-1.5 rounded-md">
-                          View Details
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* ═══════════════════════════════════ RESTAURANTS ═══════════════════════════════════ */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-sm shadow-emerald-500/20">
-                <IoStorefront className="text-white" size={12} />
-              </div>
-              <h2 className="text-base font-bold text-gray-900 tracking-tight">
-                Restaurants Near You
-              </h2>
-            </div>
-
-            <div className="space-y-6">
-              {shopsWithItems.map((shop) => {
-                const visibleItems = selectedCategory === "All"
-                  ? shop.items
-                  : shop.items.filter((item) => item.category === selectedCategory);
-
-                if (visibleItems.length === 0) return null;
-
-                return (
-                  <div key={shop._id} className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-500 group">
-                    {/* SHOP BANNER */}
-                    <div className="relative h-44 md:h-52">
-                      <img src={shop.image} alt={shop.name} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-
-                      {/* Shop info overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-                        <div className="flex items-end justify-between">
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-white mb-0.5">{shop.name}</h3>
-                            <div className="flex items-center gap-1.5 text-gray-300 text-xs">
-                              <FaMapMarkerAlt size={10} />
-                              <span>{shop.address}, {shop.city}</span>
-                            </div>
-                          </div>
-                          <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
-                            <FaUtensils size={10} className="text-[#ff4d2d]" />
-                            <span className="font-bold text-gray-800 text-xs">{visibleItems.length} Items</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* MENU */}
-                    <div className="p-4 md:p-5">
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-bold text-sm text-gray-800">Menu</h4>
-                          <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full font-medium">{visibleItems.length} available</span>
-                        </div>
-                        <div className="flex gap-1.5">
-                          <button onClick={() => scrollMenu(shop._id, "left")} className="w-8 h-8 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 active:scale-95">
-                            <FaChevronLeft size={10} className="text-gray-500" />
-                          </button>
-                          <button onClick={() => scrollMenu(shop._id, "right")} className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff4d2d] to-orange-500 text-white shadow-md shadow-orange-500/25 flex items-center justify-center hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-200 active:scale-95">
-                            <FaChevronRight size={10} />
-                          </button>
-                        </div>
-                      </div>
-
-                      <div ref={(el) => (scrollRefs.current[shop._id] = el)} className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2">
-                        {visibleItems.map((item) => (
-                          <div key={item._id} className="min-w-[260px] max-w-[260px] flex-shrink-0">
-                            <FoodCard
-                              item={item}
-                              quantity={getQuantity(item._id)}
-                              onAddToCart={handleAddToCartClick}
-                              onRemoveFromCart={handleRemoveFromCart}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-2 rounded-xl">
+              <HiSparkles className="text-yellow-300" size={15} />
+              <span className="text-xs font-bold text-white/90">Live Route Routing</span>
             </div>
           </div>
         </div>
       </div>
 
+      {/* ═══════════════════════════════════ CATEGORIES ═══════════════════════════════════ */}
+      <div className="mb-9">
+        <div className="flex items-center gap-2.5 mb-4">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#ff4d2d] to-orange-500 flex items-center justify-center shadow-md shadow-orange-500/20">
+            <FaUtensils className="text-white" size={12} />
+          </div>
+          <h2 className="text-lg font-bold text-gray-900 tracking-tight">Explore Categories</h2>
+        </div>
+        <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-2 pt-1 px-0.5">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all duration-300 border active:scale-95 ${
+                selectedCategory === category
+                  ? "bg-[#ff4d2d] text-white border-[#ff4d2d] shadow-lg shadow-orange-500/30 scale-[1.02]"
+                  : "bg-white text-gray-600 border-gray-200/80 hover:border-orange-300 hover:text-[#ff4d2d] hover:bg-orange-50/50 shadow-sm"
+              }`}
+            >
+              <span className="text-base">{categoryIcons[category]}</span>
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════ RECENT ORDERS ═══════════════════════════════════ */}
+      {recentOrders.length > 0 && (
+        <div className="mb-10">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-md shadow-purple-500/20">
+                <FaHistory className="text-white" size={12} />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 tracking-tight">Recent Orders</h2>
+            </div>
+            <button onClick={() => navigate("/orders")} className="text-xs font-bold text-[#ff4d2d] hover:text-orange-600 transition flex items-center gap-1 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 rounded-xl">
+              View All
+              <FaChevronRight size={9} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {recentOrders.map((order) => {
+              const cfg = statusConfig[order.status] || statusConfig.placed;
+              return (
+                <div key={order._id} className="group bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-xl hover:border-orange-200/60 transition-all duration-300 flex flex-col justify-between">
+                  <div>
+                    {/* Header row */}
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="flex items-center gap-3">
+                        {order.shop?.image ? (
+                          <img src={order.shop.image} alt={order.shop.name} className="w-10 h-10 rounded-xl object-cover ring-1 ring-gray-100 shadow-sm" />
+                        ) : (
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-100 to-amber-50 flex items-center justify-center">
+                            <IoStorefront className="text-[#ff4d2d]" size={18} />
+                          </div>
+                        )}
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-sm truncate max-w-[130px] group-hover:text-[#ff4d2d] transition-colors">{order.shop?.name || "Restaurant"}</h3>
+                          <p className="text-[11px] text-gray-400 mt-0.5 font-medium">
+                            {new Date(order.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
+                          </p>
+                        </div>
+                      </div>
+                      <span className={`flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold border ${cfg.color}`}>
+                        {cfg.icon}
+                        {cfg.label}
+                      </span>
+                    </div>
+
+                    {/* Items list */}
+                    <div className="bg-gray-50/90 rounded-xl p-3 space-y-1.5 mb-4 border border-gray-100/60">
+                      {order.items.slice(0, 2).map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between text-xs font-medium">
+                          <span className="text-gray-700 truncate pr-2">
+                            <span className="text-[#ff4d2d] font-bold mr-1">{item.quantity}×</span> {item.name}
+                          </span>
+                        </div>
+                      ))}
+                      {order.items.length > 2 && (
+                        <p className="text-[11px] text-gray-400 pt-1 font-semibold">+{order.items.length - 2} more dishes</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+                    <div>
+                      <span className="text-[10px] text-gray-400 font-bold block">TOTAL</span>
+                      <span className="font-black text-gray-900 text-base">₹{order.totalAmount}</span>
+                    </div>
+                    <button onClick={() => navigate("/orders")} className="text-xs font-bold text-white bg-gray-900 group-hover:bg-[#ff4d2d] transition-colors px-3.5 py-2 rounded-xl shadow-sm">
+                      Track Order
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════ RESTAURANTS (PREMIUM SHOWCASES) ═══════════════════════════════════ */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md shadow-emerald-500/20">
+              <IoStorefront className="text-white" size={14} />
+            </div>
+            <h2 className="text-lg font-bold text-gray-900 tracking-tight">
+              Featured Restaurants & Menus
+            </h2>
+          </div>
+          {selectedCategory !== "All" && (
+            <button
+              onClick={() => setSelectedCategory("All")}
+              className="text-xs font-bold text-gray-500 hover:text-red-500 underline transition"
+            >
+              Reset Filters
+            </button>
+          )}
+        </div>
+
+        <div className="space-y-10">
+          {(() => {
+            const renderedShops = shopsWithItems.map((shop) => {
+              const visibleItems = selectedCategory === "All"
+                ? shop.items
+                : shop.items.filter((item) => item.category === selectedCategory);
+
+              if (visibleItems.length === 0) return null;
+
+              return (
+                <div key={shop._id} className="bg-white rounded-[24px] border border-gray-200/70 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group">
+                  {/* COMPACT LUXURY HEADER BANNER (Not stretched wide!) */}
+                  <div className="relative bg-gradient-to-r from-gray-900 via-[#1f2937] to-[#111827] p-6 sm:p-7 text-white overflow-hidden border-b border-gray-800">
+                    {/* Ambient glow */}
+                    <div className="absolute right-0 top-0 w-80 h-80 bg-gradient-to-bl from-[#ff4d2d]/20 via-orange-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+                    <div className="relative z-10 flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
+                      <div className="flex gap-4 sm:gap-6 items-center">
+                        {/* SQUARE THUMBNAIL BANNER (Guaranteed visible & beautifully proportioned) */}
+                        <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl overflow-hidden ring-4 ring-white/10 bg-gray-800 shadow-2xl flex-shrink-0 relative flex items-center justify-center">
+                          {shop.image ? (
+                            <img
+                              src={shop.image}
+                              alt={shop.name}
+                              onError={(e) => { e.target.style.display = 'none'; if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex'; }}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            />
+                          ) : null}
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#ff4d2d] to-orange-600 items-center justify-center text-white" style={{ display: shop.image ? 'none' : 'flex' }}>
+                            <IoStorefront size={34} />
+                          </div>
+                        </div>
+
+                        {/* INFO */}
+                        <div>
+                          <div className="flex items-center gap-2 mb-2 flex-wrap">
+                            <span className="bg-[#ff4d2d] text-white text-[10px] font-black px-2.5 py-0.5 rounded-md uppercase tracking-wider shadow-sm">
+                              Verified Partner
+                            </span>
+                            <span className="flex items-center gap-1 bg-white/10 backdrop-blur-md text-amber-300 border border-white/10 text-xs font-extrabold px-2.5 py-0.5 rounded-md">
+                              <FaStar size={11} className="text-amber-400" /> 4.6
+                            </span>
+                          </div>
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white group-hover:text-orange-200 transition-colors">
+                            {shop.name}
+                          </h3>
+                          <div className="flex items-center gap-2 text-gray-300 text-xs mt-2 flex-wrap font-medium">
+                            <span className="flex items-center gap-1.5 text-gray-200">
+                              <FaMapMarkerAlt className="text-[#ff4d2d]" size={12} />
+                              {shop.address}, {shop.city}
+                            </span>
+                            <span className="text-gray-500">•</span>
+                            <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">⚡ 25-35 mins</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* CONTROLS */}
+                      <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-3 border-t sm:border-t-0 pt-4 sm:pt-0 border-white/10">
+                        <span className="bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/10 text-xs font-bold text-white">
+                          🍽️ {visibleItems.length} Dishes
+                        </span>
+                        <div className="flex gap-2">
+                          <button onClick={() => scrollMenu(shop._id, "left")} className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 backdrop-blur-sm flex items-center justify-center text-white transition active:scale-95 shadow-sm" title="Scroll Left">
+                            <FaChevronLeft size={12} />
+                          </button>
+                          <button onClick={() => scrollMenu(shop._id, "right")} className="w-9 h-9 rounded-xl bg-[#ff4d2d] hover:bg-orange-600 shadow-lg shadow-[#ff4d2d]/30 flex items-center justify-center text-white transition active:scale-95" title="Scroll Right">
+                            <FaChevronRight size={12} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* HORIZONTAL MENU CAROUSEL */}
+                  <div className="p-6 sm:p-8 bg-[#fafafa]/80">
+                    <div ref={(el) => (scrollRefs.current[shop._id] = el)} className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth pb-3 pt-1 px-1">
+                      {visibleItems.map((item) => (
+                        <div key={item._id} className="min-w-[260px] max-w-[260px] flex-shrink-0">
+                          <FoodCard
+                            item={item}
+                            quantity={getQuantity(item._id)}
+                            onAddToCart={handleAddToCartClick}
+                            onRemoveFromCart={handleRemoveFromCart}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            }).filter(Boolean);
+
+            if (renderedShops.length === 0) {
+              return (
+                <div className="bg-white rounded-3xl p-12 text-center border border-gray-100 shadow-sm max-w-md mx-auto my-12">
+                  <div className="w-16 h-16 bg-orange-50 text-[#ff4d2d] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <FaUtensils size={28} />
+                  </div>
+                  <h3 className="text-xl font-extrabold text-gray-900">No matching dishes</h3>
+                  <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                    We couldn't find any dishes matching your selected category. Try picking another category.
+                  </p>
+                  <button
+                    onClick={() => setSelectedCategory("All")}
+                    className="mt-6 px-6 py-3 bg-gradient-to-r from-[#ff4d2d] to-orange-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-orange-500/25 hover:opacity-95 transition active:scale-95"
+                  >
+                    Explore All Categories
+                  </button>
+                </div>
+              );
+            }
+
+            return renderedShops;
+          })()}
+        </div>
+      </div>
+
       {/* ═══════════════════════════════════ REPLACE CART MODAL ═══════════════════════════════════ */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-md transition-opacity">
-          <div className="bg-white rounded-[22px] max-w-md w-full p-7 shadow-2xl transform transition-all border border-gray-100">
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-md transition-opacity animate-[fadeIn_0.2s_ease]">
+          <div className="bg-white rounded-[24px] max-w-md w-full p-8 shadow-2xl transform transition-all border border-gray-100">
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-50 to-orange-50 text-red-500 rounded-2xl flex items-center justify-center mb-5 shadow-sm">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-50 to-orange-50 text-red-500 rounded-2xl flex items-center justify-center mb-5 shadow-sm border border-red-100">
                 <FaExclamationTriangle size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">Replace Cart Items?</h3>
-              <p className="text-gray-500 text-sm mt-3 leading-relaxed max-w-xs">
-                Your cart currently contains dishes from another restaurant. Adding items from this restaurant will discard your previous items.
+              <h3 className="text-2xl font-black text-gray-900 tracking-tight">Replace Cart?</h3>
+              <p className="text-gray-500 text-sm mt-3 leading-relaxed max-w-xs font-medium">
+                Your cart contains dishes from another restaurant. Adding this item will discard your current cart.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-7">
-              <button onClick={handleCancelReplace} className="py-3 border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition active:scale-[0.97]">
-                Cancel
+            <div className="grid grid-cols-2 gap-3.5 mt-8">
+              <button onClick={handleCancelReplace} className="py-3.5 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition active:scale-[0.97] text-sm">
+                Keep Old Cart
               </button>
-              <button onClick={handleConfirmReplace} className="py-3 bg-gradient-to-r from-[#ff4d2d] to-orange-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-orange-500/25 transition shadow-md shadow-orange-500/20 active:scale-[0.97]">
+              <button onClick={handleConfirmReplace} className="py-3.5 bg-gradient-to-r from-[#ff4d2d] to-orange-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-orange-500/25 transition shadow-md shadow-orange-500/20 active:scale-[0.97] text-sm">
                 Yes, Replace
               </button>
             </div>
