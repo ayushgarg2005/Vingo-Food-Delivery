@@ -47,7 +47,7 @@ function SignUp() {
 
       dispatch(setUserData(response.data.user));
       alert("Account Created Successfully");
-      navigate("/signin");
+      navigate("/");
     } catch (error) {
       alert(
         error?.response?.data?.message ||
