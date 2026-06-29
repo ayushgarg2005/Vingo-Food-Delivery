@@ -44,15 +44,7 @@ function SignIn() {
 
       const user = response.data;
       dispatch(setUserData(user));
-
-      if (user.role === "user") {
-        navigate("/", { replace: true });
-      } else if (user.role === "owner") {
-        navigate("/owner/dashboard", { replace: true });
-      } else if (user.role === "deliveryBoy") {
-        navigate("/delivery/dashboard", { replace: true });
-      }
-
+      navigate("/");
     } catch (error) {
       alert(
         error?.response?.data?.message ||
@@ -80,14 +72,7 @@ const handleGoogleAuth = async () => {
 
       const user = data.user;
       dispatch(setUserData(user));
-
-      if (user.role === "user") {
-        navigate("/", { replace: true });
-      } else if (user.role === "owner") {
-        navigate("/owner/dashboard", { replace: true });
-      } else if (user.role === "deliveryBoy") {
-        navigate("/delivery/dashboard", { replace: true });
-      }
+      navigate("/");
 
     console.log(data);
   } catch (error) {
