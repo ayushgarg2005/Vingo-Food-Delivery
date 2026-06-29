@@ -45,7 +45,8 @@ function SignUp() {
         }
       );
 
-      dispatch(setUserData(response.data.user));
+      const user = response.data;
+      dispatch(setUserData(user));
       alert("Account Created Successfully");
       navigate("/");
     } catch (error) {
@@ -85,7 +86,8 @@ const handleGoogleAuth = async () => {
         withCredentials: true,
       }
     );
-    dispatch(setUserData(response.data.user));
+    const user = response.data;
+    dispatch(setUserData(user));
     alert(response.data.message);
 
     navigate("/");
