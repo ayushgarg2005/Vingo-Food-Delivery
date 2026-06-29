@@ -4,11 +4,20 @@ import genToken from "../Utils/token.js";
 import { sendEmail } from "../Utils/mail.js";
 
 
+const findUserByEmail = async (email) => {
+    if (!email) return null;
+    const cleanEmail = email.trim().toLowerCase();
+    const escapedEmail = cleanEmail.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    return await User.findOne({ email: { $regex: new RegExp(`^${escapedEmail}$`, "i") } });
+};
+
+
 export const signUp = async (req, res) => {
     try {
         const { fullName, email, password, mobile, role } = req.body;
+        const cleanEmail = email ? email.trim().toLowerCase() : "";
 
-        let user = await User.findOne({ email });
+        let user = await findUserByEmail(email);
 
         if (user) {
             return res.status(400).json({
@@ -26,7 +35,7 @@ export const signUp = async (req, res) => {
 
         user = await User.create({
             fullName,
-            email,
+            email: cleanEmail,
             role,
             mobile,
             password: hashedPassword
@@ -35,8 +44,8 @@ export const signUp = async (req, res) => {
         const token = await genToken(user._id);
 
         res.cookie("token", token, {
-            secure: false,
-            sameSite: "strict",
+            secure: true,
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true
         });
@@ -58,11 +67,17 @@ export const signIn = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email });
+        const user = await findUserByEmail(email);
 
         if (!user) {
             return res.status(400).json({
                 message: "Invalid Email or Password"
+            });
+        }
+
+        if (!user.password) {
+            return res.status(400).json({
+                message: "Please continue with Google or reset your password."
             });
         }
 
@@ -81,8 +96,8 @@ export const signIn = async (req, res) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "strict",
+            secure: true,
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
@@ -107,7 +122,11 @@ export const signIn = async (req, res) => {
 export const signOut = async (req, res) => {
     try {
 
-        res.clearCookie("token");
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        });
 
         return res.status(200).json({
             message: "log out successfully"
@@ -127,7 +146,7 @@ export const sendOtp = async (req, res) => {
 
         const { email } = req.body;
 
-        const user = await User.findOne({ email });
+        const user = await findUserByEmail(email);
 
         if (!user) {
             return res.status(404).json({
@@ -145,7 +164,7 @@ export const sendOtp = async (req, res) => {
 
         await user.save();
 
-        await sendEmail(email, "Reset Password", otp);
+        await sendEmail(user.email, "Reset Password", otp);
 
         return res.status(200).json({
             success: true,
@@ -169,7 +188,7 @@ export const verifyOtp = async (req, res) => {
 
         const { email, otp } = req.body;
 
-        const user = await User.findOne({ email });
+        const user = await findUserByEmail(email);
 
         if (!user) {
             return res.status(404).json({
@@ -215,7 +234,7 @@ export const resetPassword = async (req, res) => {
 
         const { email, newPassword } = req.body;
 
-        const user = await User.findOne({ email });
+        const user = await findUserByEmail(email);
 
         if (!user) {
             return res.status(404).json({
@@ -274,7 +293,8 @@ export const googleAuth = async (req, res) => {
       });
     }
 
-    let user = await User.findOne({ email });
+    const cleanEmail = email.trim().toLowerCase();
+    let user = await findUserByEmail(email);
 
     // Signup
     if (!user) {
@@ -287,7 +307,7 @@ export const googleAuth = async (req, res) => {
 
       user = await User.create({
         fullName,
-        email,
+        email: cleanEmail,
         mobile,
         role: role || "user",
       });
@@ -297,8 +317,8 @@ export const googleAuth = async (req, res) => {
     const token = await genToken(user._id);
 
     res.cookie("token", token, {
-      secure: false, // true in production
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });

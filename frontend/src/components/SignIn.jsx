@@ -34,9 +34,14 @@ function SignIn() {
     try {
       setLoading(true);
 
+      const payload = {
+        ...formData,
+        email: formData.email ? formData.email.trim().toLowerCase() : "",
+      };
+
       const response = await axios.post(
         `${serverURL}/api/auth/signin`,
-        formData,
+        payload,
         {
           withCredentials: true,
         }
