@@ -1,1 +1,1 @@
-export const serverURL = " https://vingo-food-delivery-nqjr.onrender.com";
+export const serverURL = "https://vingo-food-delivery-nqjr.onrender.com";
