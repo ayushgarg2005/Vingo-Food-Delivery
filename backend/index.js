@@ -18,7 +18,7 @@ const app = express();
 const server = http.createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: "https://vingo-food-delivery-hnz9j522v-ayush-garg-s-projects1.vercel.app",
+    origin: "https://vingo-food-delivery-nu.vercel.app",
     credentials: true,
   },
 });
@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-    origin: "https://vingo-food-delivery-hnz9j522v-ayush-garg-s-projects1.vercel.app",
+    origin: "https://vingo-food-delivery-nu.vercel.app",
     credentials: true
 }));
 
