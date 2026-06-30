@@ -106,6 +106,7 @@ function ForgotPassword() {
         `${serverURL}/api/auth/reset-password`,
         {
           email: cleanEmail,
+          otp: otp ? otp.trim() : "",
           newPassword,
         },
         { withCredentials: true }

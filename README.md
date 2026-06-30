@@ -97,8 +97,13 @@ graph TD
    Create a `.env` file in the `backend` directory:
    ```env
    PORT=8000
-   MONGO_URI=your_mongodb_connection_string
+   MONGODB_URL=your_mongodb_connection_string
    JWT_SECRET=your_secret_key
+   EMAIL_USER=your_email_address
+   EMAIL_PASS=your_email_app_password
+   EMAIL_HOST=smtp.gmail.com
+   EMAIL_PORT=587
+   EMAIL_SECURE=false
    FRONTEND_URL=http://localhost:5173
    ```
    Start the backend server:
@@ -113,6 +118,7 @@ graph TD
    ```
    Create a `.env` file in the `frontend` directory:
    ```env
+   VITE_SERVER_URL=http://localhost:8000
    VITE_API_URL=http://localhost:8000
    ```
    Start the frontend server:

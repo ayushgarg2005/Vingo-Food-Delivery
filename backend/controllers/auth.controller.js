@@ -158,13 +158,13 @@ export const sendOtp = async (req, res) => {
             100000 + Math.random() * 900000
         ).toString();
 
+        await sendEmail(user.email, "Reset Password", otp);
+
         user.resetOtp = otp;
         user.otpExpires = Date.now() + 5 * 60 * 1000;
         user.isOtpVerified = false;
 
         await user.save();
-
-        await sendEmail(user.email, "Reset Password", otp);
 
         return res.status(200).json({
             success: true,
@@ -237,13 +237,19 @@ export const verifyOtp = async (req, res) => {
 export const resetPassword = async (req, res) => {
     try {
 
-        const { email, newPassword } = req.body;
+        const { email, otp, newPassword } = req.body;
 
         const user = await findUserByEmail(email);
 
         if (!user) {
             return res.status(404).json({
                 message: "User not found"
+            });
+        }
+
+        if (!user.resetOtp || String(user.resetOtp).trim() !== String(otp).trim()) {
+            return res.status(400).json({
+                message: "Invalid OTP"
             });
         }
 

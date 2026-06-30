@@ -1,1 +1,3 @@
-export const serverURL = "https://vingo-food-delivery-nqjr.onrender.com";
+export const serverURL =
+  import.meta.env.VITE_SERVER_URL ||
+  "https://vingo-food-delivery-nqjr.onrender.com";
