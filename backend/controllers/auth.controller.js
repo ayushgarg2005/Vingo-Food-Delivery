@@ -202,7 +202,12 @@ export const verifyOtp = async (req, res) => {
             });
         }
 
-        if (user.otpExpires < Date.now()) {
+        if (!user.otpExpires || user.otpExpires < Date.now()) {
+            user.resetOtp = undefined;
+            user.otpExpires = undefined;
+            user.isOtpVerified = false;
+            await user.save();
+
             return res.status(400).json({
                 message: "OTP expired"
             });
@@ -242,9 +247,9 @@ export const resetPassword = async (req, res) => {
             });
         }
 
-        if (!user.isOtpVerified) {
+        if (!user.isOtpVerified || !user.resetOtp || !user.otpExpires || user.otpExpires < Date.now()) {
             return res.status(400).json({
-                message: "OTP verification required"
+                message: "OTP verification required or OTP has expired"
             });
         }
 
@@ -254,8 +259,7 @@ export const resetPassword = async (req, res) => {
             });
         }
 
-        const hashedPassword =
-            await bcrypt.hash(newPassword, 10);
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         user.password = hashedPassword;
 

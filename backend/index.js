@@ -16,14 +16,26 @@ import orderRouter from "./routes/order.routes.js";
 const allowedOrigins = [
   "https://vingo-food-delivery-nu.vercel.app",
   "http://localhost:5173",
-  "http://localhost:3000"
+  "http://localhost:3000",
 ];
+
+const extraOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim()).filter(Boolean)
+  : [];
+
+const corsOrigins = [...allowedOrigins, ...extraOrigins];
 
 const app = express();
 const server = http.createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      if (!origin || corsOrigins.includes(origin) || origin.endsWith(".vercel.app") || origin.endsWith(".onrender.com")) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   },
 });
@@ -67,7 +79,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+        if (!origin || corsOrigins.includes(origin) || origin.endsWith(".vercel.app") || origin.endsWith(".onrender.com")) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
