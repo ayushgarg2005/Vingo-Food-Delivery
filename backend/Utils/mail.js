@@ -3,13 +3,20 @@ import nodemailer from 'nodemailer';
 
 export const sendEmail = async (to, subject, otp) => {
     try {
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            throw new Error("Email configuration missing on server: EMAIL_USER or EMAIL_PASS environment variables are not set in your Render dashboard.");
+        }
+
         const transporter = nodemailer.createTransport({
-            service: 'Gmail',
+            host: 'smtp.gmail.com',
             port: 465,
             secure: true,
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
+            },
+            tls: {
+                rejectUnauthorized: false
             }
         });
 
