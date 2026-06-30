@@ -23,14 +23,17 @@ function ForgotPassword() {
   ] = useState("");
 
   const sendOtp = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
     try {
       setLoading(true);
 
+      const cleanEmail = email ? email.trim().toLowerCase() : "";
+
       const res = await axios.post(
         `${serverURL}/api/auth/send-otp`,
-        { email }
+        { email: cleanEmail },
+        { withCredentials: true }
       );
 
       alert(res.data.message);
@@ -47,17 +50,21 @@ function ForgotPassword() {
   };
 
   const verifyOtp = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
     try {
       setLoading(true);
 
+      const cleanEmail = email ? email.trim().toLowerCase() : "";
+      const cleanOtp = otp ? otp.trim() : "";
+
       const res = await axios.post(
         `${serverURL}/api/auth/verify-otp`,
         {
-          email,
-          otp,
-        }
+          email: cleanEmail,
+          otp: cleanOtp,
+        },
+        { withCredentials: true }
       );
 
       alert(res.data.message);
@@ -74,7 +81,7 @@ function ForgotPassword() {
   };
 
   const resetPassword = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
     if (newPassword.length < 6) {
       alert(
@@ -93,12 +100,15 @@ function ForgotPassword() {
     try {
       setLoading(true);
 
+      const cleanEmail = email ? email.trim().toLowerCase() : "";
+
       const res = await axios.post(
         `${serverURL}/api/auth/reset-password`,
         {
-          email,
+          email: cleanEmail,
           newPassword,
-        }
+        },
+        { withCredentials: true }
       );
 
       alert(res.data.message);

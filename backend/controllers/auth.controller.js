@@ -196,7 +196,7 @@ export const verifyOtp = async (req, res) => {
             });
         }
 
-        if (user.resetOtp !== otp) {
+        if (!user.resetOtp || String(user.resetOtp).trim() !== String(otp).trim()) {
             return res.status(400).json({
                 message: "Invalid OTP"
             });
