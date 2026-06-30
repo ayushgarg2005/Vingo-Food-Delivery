@@ -99,11 +99,8 @@ graph TD
    PORT=8000
    MONGODB_URL=your_mongodb_connection_string
    JWT_SECRET=your_secret_key
-   EMAIL_USER=your_email_address
-   EMAIL_PASS=your_email_app_password
-   EMAIL_HOST=smtp.gmail.com
-   EMAIL_PORT=587
-   EMAIL_SECURE=false
+   RESEND_API_KEY=your_resend_api_key
+   RESEND_FROM_EMAIL=Vingo Food Delivery <noreply@your-verified-domain.com>
    FRONTEND_URL=http://localhost:5173
    ```
    Start the backend server:

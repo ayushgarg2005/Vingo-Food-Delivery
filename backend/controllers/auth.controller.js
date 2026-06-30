@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import genToken from "../Utils/token.js";
-import { sendEmail } from "../Utils/mail.js";
+import { getEmailErrorMessage, sendEmail } from "../Utils/mail.js";
 
 
 const findUserByEmail = async (email) => {
@@ -145,8 +145,16 @@ export const sendOtp = async (req, res) => {
     try {
 
         const { email } = req.body;
+        const cleanEmail = email ? email.trim().toLowerCase() : "";
 
-        const user = await findUserByEmail(email);
+        if (!cleanEmail) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is required"
+            });
+        }
+
+        const user = await findUserByEmail(cleanEmail);
 
         if (!user) {
             return res.status(404).json({
@@ -173,11 +181,11 @@ export const sendOtp = async (req, res) => {
 
     } catch (error) {
 
-        console.log(error);
+        console.log("sendOtp error:", getEmailErrorMessage(error));
 
-        return res.status(500).json({
+        return res.status(502).json({
             success: false,
-            message: error.message
+            message: getEmailErrorMessage(error)
         });
 
     }
